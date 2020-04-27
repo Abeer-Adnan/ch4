@@ -14,13 +14,17 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -29,15 +33,23 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class TableViewPaneController implements Initializable {
 
+    @FXML
     private TextField txtFieldID;
+    @FXML
     private TextField txtFieldName;
+    @FXML
     private TextField txtFieldMajor;
+    @FXML
     private TextField txtFieldGrade;
     @FXML
     private TableView<Student> tableView;
+    @FXML
     private TableColumn<Student, Integer> tcID;
+    @FXML
     private TableColumn<Student, String> tcName;
+    @FXML
     private TableColumn<Student, String> tcMajor;
+    @FXML
     private TableColumn<Student, Double> tcGrade;
     @FXML
     private Button buttonShow;
@@ -49,6 +61,13 @@ public class TableViewPaneController implements Initializable {
     private Button buttonExit;
 
     Statement statement;
+    @FXML
+    private Button buttonEdit;
+    @FXML
+    private Button buttonDelete;
+    @FXML
+    private Button buttonAddCourse;
+    /*
     @FXML
     private Label StudentID;
     @FXML
@@ -66,7 +85,7 @@ public class TableViewPaneController implements Initializable {
     @FXML
     private TableColumn<?, ?> tcIDCourse;
     @FXML
-    private TableColumn<?, ?> tcSemester;
+    private TableColumn<?, ?> tcSemester;*/
     /**
      * Initializes the controller class.
      */
@@ -91,10 +110,9 @@ public class TableViewPaneController implements Initializable {
                 event-> showSelectedStudent() );
     
     }    
-
-    @FXML
-    private void buttonShowHandle(ActionEvent event) throws Exception {
-    ResultSet rs = this.statement.executeQuery("Select * From Student");
+       @FXML
+        private void buttonShowHandle(ActionEvent event) throws Exception {
+           ResultSet rs = this.statement.executeQuery("Select * From Student");
         tableView.getItems().clear();
         while(rs.next()){
             Student student = new Student();
@@ -104,7 +122,8 @@ public class TableViewPaneController implements Initializable {
             student.setGrade(rs.getDouble("grade"));
             tableView.getItems().add(student);
         }
-    }
+        }
+       
 
     @FXML
     private void buttonAddHandle(ActionEvent event) throws Exception{
@@ -117,6 +136,7 @@ public class TableViewPaneController implements Initializable {
         this.statement.executeUpdate(sql);
     }
 
+    @FXML
     private void buttonEditHandle(ActionEvent event) throws Exception{
         Integer id = Integer.parseInt(txtFieldID.getText());
         String name = txtFieldName.getText();
@@ -127,6 +147,7 @@ public class TableViewPaneController implements Initializable {
         this.statement.executeUpdate(sql);
     }
 
+    @FXML
     private void buttonDeleteHandle(ActionEvent event) throws SQLException {
         Integer id = Integer.parseInt(txtFieldID.getText());
         String name = txtFieldName.getText();
@@ -162,6 +183,19 @@ public class TableViewPaneController implements Initializable {
         txtFieldGrade.setText(String.valueOf(student.getGrade()));
         }
 
+    }
+
+    @FXML
+    private void buttonAddCourseHandle(ActionEvent event) {
+        try{
+            FXMLLoader fxmll =new FXMLLoader(getClass().getResource("AddCourse.fxml"));
+            Parent p = fxmll.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(p));
+            stage.show();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
     }
     
 }
