@@ -22,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -33,13 +34,9 @@ import javafx.stage.Stage;
  */
 public class TableViewPaneController implements Initializable {
 
-    @FXML
     private TextField txtFieldID;
-    @FXML
     private TextField txtFieldName;
-    @FXML
     private TextField txtFieldMajor;
-    @FXML
     private TextField txtFieldGrade;
     @FXML
     private TableView<Student> tableView;
@@ -54,38 +51,16 @@ public class TableViewPaneController implements Initializable {
     @FXML
     private Button buttonShow;
     @FXML
-    private Button buttonAdd;
-    @FXML
     private Button buttonReset;
     @FXML
     private Button buttonExit;
 
     Statement statement;
     @FXML
-    private Button buttonEdit;
+    private Label labelQuerie;
     @FXML
-    private Button buttonDelete;
-    @FXML
-    private Button buttonAddCourse;
-    /*
-    @FXML
-    private Label StudentID;
-    @FXML
-    private TextField txtFieldstudentID;
-    @FXML
-    private TextField txtFieldCourseid;
-    @FXML
-    private TextField txtFieldSemester;
-    @FXML
-    private Label CourseID;
-    @FXML
-    private Label Semester;
-    @FXML
-    private TableColumn<?, ?> tcIDStudent;
-    @FXML
-    private TableColumn<?, ?> tcIDCourse;
-    @FXML
-    private TableColumn<?, ?> tcSemester;*/
+    private TextArea textareaaquery;
+   
     /**
      * Initializes the controller class.
      */
@@ -109,6 +84,27 @@ public class TableViewPaneController implements Initializable {
         tableView.getSelectionModel().selectedItemProperty().addListener(
                 event-> showSelectedStudent() );
     
+    }
+     private void showSelectedStudent(){
+        Student student = tableView.getSelectionModel().getSelectedItem();
+        if(student != null){
+        txtFieldID.setText(String.valueOf(student.getId()));
+        txtFieldName.setText(student.getName());
+        txtFieldMajor.setText(student.getMajor());
+        txtFieldGrade.setText(String.valueOf(student.getGrade()));
+        }
+
+    }
+ private void buttonAddCourseHandle(ActionEvent event) {
+        try{
+            FXMLLoader fxmll =new FXMLLoader(getClass().getResource("AddCourse.fxml"));
+            Parent p = fxmll.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(p));
+            stage.show();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
     }    
        @FXML
         private void buttonShowHandle(ActionEvent event) throws Exception {
@@ -125,7 +121,6 @@ public class TableViewPaneController implements Initializable {
         }
        
 
-    @FXML
     private void buttonAddHandle(ActionEvent event) throws Exception{
          Integer id = Integer.parseInt(txtFieldID.getText());
         String name = txtFieldName.getText();
@@ -136,7 +131,6 @@ public class TableViewPaneController implements Initializable {
         this.statement.executeUpdate(sql);
     }
 
-    @FXML
     private void buttonEditHandle(ActionEvent event) throws Exception{
         Integer id = Integer.parseInt(txtFieldID.getText());
         String name = txtFieldName.getText();
@@ -147,7 +141,6 @@ public class TableViewPaneController implements Initializable {
         this.statement.executeUpdate(sql);
     }
 
-    @FXML
     private void buttonDeleteHandle(ActionEvent event) throws SQLException {
         Integer id = Integer.parseInt(txtFieldID.getText());
         String name = txtFieldName.getText();
@@ -160,42 +153,20 @@ public class TableViewPaneController implements Initializable {
 
     @FXML
     private void buttonResetHandle(ActionEvent event) {
-        resetControls();
-    }
- private void resetControls(){
-        txtFieldID.setText("");
+         txtFieldID.setText("");
         txtFieldName.setText("");
         txtFieldMajor.setText("");
         txtFieldGrade.setText("");
         tableView.getItems().clear();
     }
  
+ 
     @FXML
     private void buttonExitHandle(ActionEvent event) {
         System.exit(0);
     }
-    private void showSelectedStudent(){
-        Student student = tableView.getSelectionModel().getSelectedItem();
-        if(student != null){
-        txtFieldID.setText(String.valueOf(student.getId()));
-        txtFieldName.setText(student.getName());
-        txtFieldMajor.setText(student.getMajor());
-        txtFieldGrade.setText(String.valueOf(student.getGrade()));
-        }
+   
 
-    }
-
-    @FXML
-    private void buttonAddCourseHandle(ActionEvent event) {
-        try{
-            FXMLLoader fxmll =new FXMLLoader(getClass().getResource("AddCourse.fxml"));
-            Parent p = fxmll.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(p));
-            stage.show();
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-    }
+   
     
 }

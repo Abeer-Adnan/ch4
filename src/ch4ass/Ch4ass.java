@@ -28,8 +28,11 @@ public class Ch4ass extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Pane paneTableView = FXMLLoader.load(getClass().getResource("TableViewPane.fxml"));
+       
+        
         Map<String,Pane>mapPanes=new TreeMap<>(); 
         mapPanes.put("tableView", paneTableView);
+      
         
         Scene scene = new Scene(mapPanes.get("tableView"));
         

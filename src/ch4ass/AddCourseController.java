@@ -88,8 +88,8 @@ public class AddCourseController implements Initializable {
         Integer courseid = Integer.parseInt(txtFieldCourseid.getText());
         String semester = txtFieldSemester.getText();
        
-        String sql = "Insert Into Registration values(" + studentID + ",'"  
-                + courseid + "'," + semester + ")";
+        String sql = "Insert Into Registration values(" + studentID + ","  
+                + courseid + ",'" + semester + "')";
         this.statement.executeUpdate(sql);
     }
 

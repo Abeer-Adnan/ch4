@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ch4ass">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/ch4ass.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
