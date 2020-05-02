@@ -34,9 +34,13 @@ import javafx.stage.Stage;
  */
 public class TableViewPaneController implements Initializable {
 
+    @FXML
     private TextField txtFieldID;
+    @FXML
     private TextField txtFieldName;
+    @FXML
     private TextField txtFieldMajor;
+    @FXML
     private TextField txtFieldGrade;
     @FXML
     private TableView<Student> tableView;
@@ -60,7 +64,7 @@ public class TableViewPaneController implements Initializable {
     private Label labelQuerie;
     @FXML
     private TextArea textareaaquery;
-   
+
     /**
      * Initializes the controller class.
      */
@@ -69,10 +73,10 @@ public class TableViewPaneController implements Initializable {
         try {
             // TODO
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection =
-               DriverManager.
-                getConnection("jdbc:mysql://127.0.0.1:3306/college?serverTimezone=UTC",
-                        "root", "");
+            Connection connection
+                    = DriverManager.
+                            getConnection("jdbc:mysql://127.0.0.1:3306/college?serverTimezone=UTC",
+                                    "root", "");
             this.statement = connection.createStatement();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -82,35 +86,39 @@ public class TableViewPaneController implements Initializable {
         tcMajor.setCellValueFactory(new PropertyValueFactory("major"));
         tcGrade.setCellValueFactory(new PropertyValueFactory("grade"));
         tableView.getSelectionModel().selectedItemProperty().addListener(
-                event-> showSelectedStudent() );
-    
+                event -> showSelectedStudent());
+
     }
-     private void showSelectedStudent(){
+
+    private void showSelectedStudent() {
         Student student = tableView.getSelectionModel().getSelectedItem();
-        if(student != null){
-        txtFieldID.setText(String.valueOf(student.getId()));
-        txtFieldName.setText(student.getName());
-        txtFieldMajor.setText(student.getMajor());
-        txtFieldGrade.setText(String.valueOf(student.getGrade()));
+        if (student != null) {
+            txtFieldID.setText(String.valueOf(student.getId()));
+            txtFieldName.setText(student.getName());
+            txtFieldMajor.setText(student.getMajor());
+            txtFieldGrade.setText(String.valueOf(student.getGrade()));
         }
 
     }
- private void buttonAddCourseHandle(ActionEvent event) {
-        try{
-            FXMLLoader fxmll =new FXMLLoader(getClass().getResource("AddCourse.fxml"));
+
+    @FXML
+    private void buttonAddCourseHandle(ActionEvent event) {
+        try {
+            FXMLLoader fxmll = new FXMLLoader(getClass().getResource("AddCourse.fxml"));
             Parent p = fxmll.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(p));
             stage.show();
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-    }    
-       @FXML
-        private void buttonShowHandle(ActionEvent event) throws Exception {
-           ResultSet rs = this.statement.executeQuery("Select * From Student");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void buttonShowHandle(ActionEvent event) throws Exception {
+        ResultSet rs = this.statement.executeQuery("Select * From Student");
         tableView.getItems().clear();
-        while(rs.next()){
+        while (rs.next()) {
             Student student = new Student();
             student.setId(rs.getInt("id"));
             student.setName(rs.getString("name"));
@@ -118,55 +126,52 @@ public class TableViewPaneController implements Initializable {
             student.setGrade(rs.getDouble("grade"));
             tableView.getItems().add(student);
         }
-        }
-       
-
-    private void buttonAddHandle(ActionEvent event) throws Exception{
-         Integer id = Integer.parseInt(txtFieldID.getText());
-        String name = txtFieldName.getText();
-        String major = txtFieldMajor.getText();
-        Double grade = Double.parseDouble(txtFieldGrade.getText());
-        String sql = "Insert Into Student values(" + id + ",'" +name + "','" 
-                + major + "'," + grade + ")";
-        this.statement.executeUpdate(sql);
     }
 
-    private void buttonEditHandle(ActionEvent event) throws Exception{
+    @FXML
+    private void buttonAddHandle(ActionEvent event) throws Exception {
         Integer id = Integer.parseInt(txtFieldID.getText());
         String name = txtFieldName.getText();
         String major = txtFieldMajor.getText();
         Double grade = Double.parseDouble(txtFieldGrade.getText());
-        String sql = "Update Student Set name='" + name + "', major='" + 
-                major + "', grade=" + grade + " Where id=" +id;
+        String sql = "Insert Into Student values(" + id + ",'" + name + "','"
+                + major + "'," + grade + ")";
         this.statement.executeUpdate(sql);
     }
 
+    @FXML
+    private void buttonEditHandle(ActionEvent event) throws Exception {
+        Integer id = Integer.parseInt(txtFieldID.getText());
+        String name = txtFieldName.getText();
+        String major = txtFieldMajor.getText();
+        Double grade = Double.parseDouble(txtFieldGrade.getText());
+        String sql = "Update Student Set name='" + name + "', major='"
+                + major + "', grade=" + grade + " Where id=" + id;
+        this.statement.executeUpdate(sql);
+    }
+
+    @FXML
     private void buttonDeleteHandle(ActionEvent event) throws SQLException {
         Integer id = Integer.parseInt(txtFieldID.getText());
         String name = txtFieldName.getText();
         String major = txtFieldMajor.getText();
         Double grade = Double.parseDouble(txtFieldGrade.getText());
-        String sql = "Delete From Student Where id=" +id;
+        String sql = "Delete From Student Where id=" + id;
         this.statement.executeUpdate(sql);
     }
 
-
     @FXML
     private void buttonResetHandle(ActionEvent event) {
-         txtFieldID.setText("");
+        txtFieldID.setText("");
         txtFieldName.setText("");
         txtFieldMajor.setText("");
         txtFieldGrade.setText("");
         tableView.getItems().clear();
     }
- 
- 
+
     @FXML
     private void buttonExitHandle(ActionEvent event) {
         System.exit(0);
     }
-   
 
-   
-    
 }

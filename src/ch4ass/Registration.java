@@ -12,7 +12,7 @@ package ch4ass;
 public class Registration {
     private Integer studentid;
     private Integer courseid;
-    private String semeste;
+    private String semester;
     
 
     public Registration() {
@@ -21,7 +21,7 @@ public class Registration {
     public Registration(Integer studentid, Integer courseid, String semeste) {
         this.studentid = studentid;
         this.courseid = courseid;
-        this.semeste = semeste;
+        this.semester = semeste;
     }
 
     public Integer getStudentid() {
@@ -40,16 +40,16 @@ public class Registration {
         this.courseid = courseid;
     }
 
-    public String getSemeste() {
-        return semeste;
+    public String getSemester() {
+        return semester;
     }
 
-    public void setSemeste(String semeste) {
-        this.semeste = semeste;
+    public void setSemester(String semester) {
+        this.semester = semester;
     }
 
     @Override
     public String toString() {
-            return String.format("%-5s %-5s %-10s ", studentid, courseid,semeste);
+            return String.format("%-5s %-5s %-10s ", studentid, courseid,semester);
 }    }
     

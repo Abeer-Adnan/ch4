@@ -80,7 +80,17 @@ public class AddCourseController implements Initializable {
        
         tableView.getSelectionModel().selectedItemProperty().addListener(
                 event-> showSelectedRegistration() );
-    }    
+    }  
+     private void showSelectedRegistration(){
+        Registration registration = tableView.getSelectionModel().getSelectedItem();
+        if(registration != null){
+        txtFieldstudentID.setText(String.valueOf(registration.getStudentid()));
+        txtFieldCourseid.setText(String.valueOf(registration.getCourseid()));
+        txtFieldSemester.setText(registration.getSemester());
+        
+        }
+
+    }
 
     @FXML
     private void buttonAddHandle(ActionEvent event) throws SQLException {
@@ -101,7 +111,7 @@ public class AddCourseController implements Initializable {
             Registration registration = new Registration();
             registration.setStudentid(rs.getInt("studentid"));
             registration.setCourseid(rs.getInt("courseid"));
-            registration.setSemeste(rs.getString("semester "));
+            registration.setSemester(rs.getString("semester"));
             tableView.getItems().add(registration);
         }
     }
@@ -118,14 +128,5 @@ public class AddCourseController implements Initializable {
     private void buttonExitHandle(ActionEvent event) {
         System.exit(0);
     }
-     private void showSelectedRegistration(){
-        Registration registration = tableView.getSelectionModel().getSelectedItem();
-        if(registration != null){
-        txtFieldstudentID.setText(String.valueOf(registration.getStudentid()));
-        txtFieldCourseid.setText(String.valueOf(registration.getCourseid()));
-        txtFieldSemester.setText(registration.getSemeste());
-        
-        }
-
-    }
+    
 }

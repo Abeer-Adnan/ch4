@@ -83,7 +83,7 @@ public class Qustionn2Controller implements Initializable {
     @FXML
     private void buttonShowHandle(ActionEvent event) throws SQLException {
         String query = textareaaquery.getText();
-        if(query.startsWith("Select")){
+        if(query.startsWith("select")){
              ResultSet rs = this.statement.executeQuery(query);
              tableView.getItems().clear();
         while(rs.next()){
